@@ -29,6 +29,47 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bhagvad_geeta"),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                    child: IconButton(
+                        onPressed: () {}, icon: Icon(Icons.favorite))),
+                PopupMenuItem(
+                    child: Row(
+                  children: [
+                    Icon(Icons.color_lens),
+                    Switch(
+                      value: true,
+                      onChanged: (value) {},
+                    )
+                  ],
+                ))
+              ];
+            },
+          ),
+
+                PopupMenuButton(
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        child: Text("Light"),
+                        onTap: () {
+                          providerR!.setTheme('light');
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Text("Dark"),
+                        onTap: () {
+                          providerR!.setTheme("dark");
+                        },
+                      ),
+                    ];
+                  },
+                )
+
+        ],
       ),
       body: Column(
         children: [
@@ -52,7 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 return InkWell(
                   onTap: () {
                     providerR!.changeIndex(index);
-                    providerR!.selectedList(providerR!.chapterList[index].chapter_number);
+                    providerR!.selectedList(
+                        providerR!.chapterList[index].chapter_number);
                     Navigator.pushNamed(context, 'verse');
                   },
                   child: Container(
@@ -60,7 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: MediaQuery.sizeOf(context).width,
                     alignment: Alignment.center,
                     // color: Colors.orange.shade300,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.orange.shade300),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.orange.shade300),
                     margin: EdgeInsets.all(8),
                     child: ListTile(
                       title: Text(

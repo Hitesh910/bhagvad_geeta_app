@@ -102,16 +102,40 @@ class _VerseScreenState extends State<VerseScreen> {
                   shrinkWrap: true,
                   itemCount: providerW!.filterList.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 100,
+                    return providerW!.theme == "light" ?Container(
+                      height: 150,
                       width: MediaQuery.sizeOf(context).width,
-                      color: Colors.white,
+                      // color: Colors.white,
                       margin: EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20)),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // Text(
+                          //     "${providerR!.filterList[index].chapter_number}"),
                           Text(
-                              "${providerR!.filterList[index].chapter_number}"),
-                          Text("${providerR!.filterList[index].verse}",style: TextStyle(overflow: TextOverflow.ellipsis),),
+                            "${providerR!.filterList[index].verse}",
+                            style: TextStyle(overflow: TextOverflow.ellipsis,fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ):Container(
+                      height: 150,
+                      width: MediaQuery.sizeOf(context).width,
+                      // color: Colors.white,
+                      margin: EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(20)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Text(
+                          //     "${providerR!.filterList[index].chapter_number}"),
+                          Text(
+                            "${providerR!.filterList[index].verse}",
+                            style: TextStyle(overflow: TextOverflow.ellipsis,fontSize: 18),
+                          ),
                         ],
                       ),
                     );

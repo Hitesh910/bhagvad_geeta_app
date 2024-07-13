@@ -1,3 +1,4 @@
+import 'package:bhagvad_geeta_app/utils/helper/shared_helper.dart';
 import 'package:bhagvad_geeta_app/utils/jsonHelper.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class HomeProvider with ChangeNotifier
   int selectedIndex = 0;
   List<VerseModel> allVerseList =[];
   List<VerseModel> filterList = [];
+  String? theme;
+  SharedHelper share = SharedHelper();
 
 
   void getJson() async
@@ -45,6 +48,21 @@ class HomeProvider with ChangeNotifier
       }
     notifyListeners();
   }
+
+  void setTheme(String theme)
+  {
+    share.setTheme(theme);
+    notifyListeners();
+  }
+
+  Future<void> getTheme()
+  async {
+    theme = await share.getTheme();
+    notifyListeners();
+  }
+
+  void changSwitch(bool check)
+  {}
 }
 
 
