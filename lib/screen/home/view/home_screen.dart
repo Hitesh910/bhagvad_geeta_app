@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     context.read<HomeProvider>().getJson();
     context.read<HomeProvider>().getJson2();
+    context.read<HomeProvider>().randomVerse();
   }
 
   @override
@@ -76,13 +77,18 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 100,
+              height: 120,
               width: MediaQuery.sizeOf(context).width,
               padding: EdgeInsets.all(10),
               // color: Colors.red,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.red),
+                  borderRadius: BorderRadius.circular(10), color: providerW!.theme == "light"?Colors.white:Colors.black,image: DecorationImage(image: NetworkImage("https://cf-img-a-in.tosshub.com/lingo/gnt/images/video/202112/shri_krishna_gave_divine_knowledge_to_arjuna-sixteen_nine.jpg?size=1200:675"),fit: BoxFit.cover,opacity: 0.6)),
+              child: Text("${providerR!.allVerseList[providerR!.i].verse}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(alignment: Alignment.bottomLeft,child: Text("अध्याय :",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)),
           ),
           Expanded(
             child: ListView.builder(
@@ -104,15 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     // color: Colors.orange.shade300,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.orange.shade300),
+                        color: Colors.orange.shade400),
                     margin: EdgeInsets.all(8),
                     child: ListTile(
                       title: Text(
                         "${providerR!.chapterList[index].name}",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 20,color: Colors.black),
                       ),
                       subtitle:
-                          Text("${providerR!.chapterList[index].verse} verse"),
+                          Text("${providerR!.chapterList[index].verse} verse",style: TextStyle(color: Colors.black),),
                       leading: Text(
                           "${providerR!.chapterList[index].chapter_number}."),
                       trailing: Icon(Icons.arrow_forward_ios_outlined),

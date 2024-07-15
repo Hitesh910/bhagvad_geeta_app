@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bhagvad_geeta_app/utils/helper/shared_helper.dart';
 import 'package:bhagvad_geeta_app/utils/jsonHelper.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,10 @@ class HomeProvider with ChangeNotifier
   List<VerseModel> filterList = [];
   String? theme;
   SharedHelper share = SharedHelper();
+  int i = 0;
+  List<String> verseList = [];
+  bool isLike = false;
+  SharedHelper helper = SharedHelper();
 
 
   void getJson() async
@@ -61,9 +67,47 @@ class HomeProvider with ChangeNotifier
     notifyListeners();
   }
 
-  void changSwitch(bool check)
-  {}
+  // void changSwitch(bool check)
+  // {}
+
+void randomVerse()
+{
+  Random r1 = Random();
+  i = r1.nextInt(allVerseList.length);
+  notifyListeners();
 }
+
+void verseSave(String verse)
+{
+  isLike = !isLike;
+  verseList.add(verse);
+  share.setVerse(verseList);
+  notifyListeners();
+  print(verse);
+}
+
+void setVerse1()
+{}
+
+    Future<void> getVerse1()
+    async {
+      var list = share.getVerse();
+
+      // if(list != null)
+      //   {
+      //     verseList = list as List<String>;
+      //   }
+
+      if(await share.getVerse() == null)
+        {
+          verseList = [];
+        }
+      else
+        {
+          verseList = (await share.getVerse())!;
+        }
+    }
+    }
 
 
 

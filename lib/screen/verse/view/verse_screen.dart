@@ -39,12 +39,12 @@ class _VerseScreenState extends State<VerseScreen> {
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/img.jpg"),
+                    image: AssetImage("assets/images/img.jpg"),opacity: 0.9,
                     fit: BoxFit.fill)),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
               child: Container(
-                decoration: BoxDecoration(color: Colors.black12),
+                decoration: BoxDecoration(color: Colors.black26),
               ),
             ),
           ),
@@ -52,10 +52,19 @@ class _VerseScreenState extends State<VerseScreen> {
             child: Column(
               children: [
                 Container(
+                  height: 250,
+                  width: 300,
+                  margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/images/img2.png"))),
+                          image: NetworkImage(
+                              "${providerR!.chapterList[providerR!.selectedIndex].image}"))),
                 ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //           image: AssetImage("assets/images/img2.png"))),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
@@ -102,43 +111,60 @@ class _VerseScreenState extends State<VerseScreen> {
                   shrinkWrap: true,
                   itemCount: providerW!.filterList.length,
                   itemBuilder: (context, index) {
-                    return providerW!.theme == "light" ?Container(
-                      height: 150,
-                      width: MediaQuery.sizeOf(context).width,
-                      // color: Colors.white,
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Text(
-                          //     "${providerR!.filterList[index].chapter_number}"),
-                          Text(
-                            "${providerR!.filterList[index].verse}",
-                            style: TextStyle(overflow: TextOverflow.ellipsis,fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ):Container(
-                      height: 150,
-                      width: MediaQuery.sizeOf(context).width,
-                      // color: Colors.white,
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Text(
-                          //     "${providerR!.filterList[index].chapter_number}"),
-                          Text(
-                            "${providerR!.filterList[index].verse}",
-                            style: TextStyle(overflow: TextOverflow.ellipsis,fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    );
+                    return providerW!.theme == "light"
+                        ? Container(
+                            height: 150,
+                            width: MediaQuery.sizeOf(context).width,
+                            // color: Colors.white,
+                            margin: EdgeInsets.all(10),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.white70,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Text(
+                                //     "${providerR!.filterList[index].chapter_number}"),
+                                Text(
+                                  "${providerR!.filterList[index].verse}",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 18,fontWeight: FontWeight.bold),
+                                ),
+                                Align(alignment: Alignment(0.9, -0.8),child: IconButton(icon: providerW!.isLike == false  ?Icon(Icons.favorite):Icon(Icons.favorite,color: Colors.red,),onPressed: () {
+                                  providerR!.verseSave(providerR!.filterList[index].verse!);
+                                },))
+                              ],
+                            ),
+                          )
+                        : Container(
+                            height: 150,
+                            width: MediaQuery.sizeOf(context).width,
+                            // color: Colors.white,
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.black87,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Text(
+                                //     "${providerR!.filterList[index].chapter_number}"),
+                                Text(
+                                  "${providerR!.filterList[index].verse}",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 18,fontWeight: FontWeight.w500),
+                                ),
+                                Align(alignment: Alignment(0.9, -0.8),child: Icon(Icons.favorite,color: Colors.grey,))
+                              ],
+                            ),
+                          );
                   },
                 )
               ],
