@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     providerW = context.watch<HomeProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bhagvad_geeta"),
+        title: const Text("Bhagvad_geeta"),
         actions: [
           PopupMenuButton(
             itemBuilder: (context) {
@@ -38,32 +38,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Navigator.pushNamed(context, "favorite");
                   },
-                    child: Row(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
-                    Text("Favourite")
-                  ],
-                )),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.favorite),
+                      ),
+                      const Text("Favourite")
+                    ],
+                  ),
+                ),
                 PopupMenuItem(
                     child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.color_lens,
                       size: 35,
                     ),
-                    Text("Theme"),
-                    Spacer(),
+                    const Text("Theme"),
+                    const Spacer(),
                     Switch(
                       value: providerW!.isLike,
                       onChanged: (value) {
-                         if(value == false)
-                           {
-                             providerW!.setTheme("light");
-                           }
-                         else
-                           {
-                             providerW!.setTheme("dark");
-                           }
+                        if (value == false) {
+                          providerW!.setTheme("light");
+                        } else {
+                          providerW!.setTheme("dark");
+                        }
                         print(value);
                         providerW!.verseSave2();
                         Navigator.pop(context);
@@ -76,35 +77,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     IconButton(
                       onPressed: () {
-                         showDialog(builder: (context) {
-                          return SimpleDialog(
-                            children: [Container(
-                              // height: MediaQuery.sizeOf(context).height,width: 200,
-                              color: Colors.blue,
-                                  child: Column(mainAxisSize: MainAxisSize.min,
-                                    children: [Text("Hello"), SizedBox(width: 46,child: Divider()), Text("Hii")],
+                        showDialog(
+                          builder: (context) {
+                            return SimpleDialog(
+                              children: [
+                                Container(
+                                  color: Colors.blue,
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text("Hello"),
+                                      SizedBox(
+                                        width: 46,
+                                        child: Divider(),
+                                      ),
+                                      Text("Hii")
+                                    ],
                                   ),
-                                ),]
-                          );
-                        }, context: context,
-                          // child: Container(
-                          //   child: Column(
-                          //     children: [Text("Hello"), Divider(), Text("Hii")],
-                          //   ),
-                          // ),
+                                ),
+                              ],
+                            );
+                          },
+                          context: context,
                         );
-                        // PopupMenuButton(
-                        //   itemBuilder: (context) {
-                        //     return [
-                        //       PopupMenuItem(child: Text("Hello")),
-                        //       PopupMenuItem(child: Text("Hii")),
-                        //     ];
-                        //   },
-                        // );
                       },
-                      icon: Icon(Icons.language),
+                      icon: const Icon(Icons.language),
                     ),
-                    Text("Languages")
+                    const Text("Languages")
                   ],
                 ))
               ];
@@ -114,13 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
-                  child: Text("Light"),
+                  child: const Text("Light"),
                   onTap: () {
                     providerR!.setTheme('light');
                   },
                 ),
                 PopupMenuItem(
-                  child: Text("Dark"),
+                  child: const Text("Dark"),
                   onTap: () {
                     providerR!.setTheme("dark");
                   },
@@ -137,31 +136,33 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               height: 120,
               width: MediaQuery.sizeOf(context).width,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               // color: Colors.red,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color:
                       providerW!.theme == "light" ? Colors.white : Colors.black,
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       image: NetworkImage(
                           "https://cf-img-a-in.tosshub.com/lingo/gnt/images/video/202112/shri_krishna_gave_divine_knowledge_to_arjuna-sixteen_nine.jpg?size=1200:675"),
                       fit: BoxFit.cover,
                       opacity: 0.6)),
               child: Text(
                 "${providerR!.allVerseList[providerR!.i].verse}",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  "अध्याय :",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                )),
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                "अध्याय :",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -171,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                   // providerR!.changeIndex(index);
+                    // providerR!.changeIndex(index);
                     providerR!.selectedList(
                         providerR!.chapterList[index].chapter_number);
                     Navigator.pushNamed(context, 'verse');
@@ -184,20 +185,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.orange.shade400),
-                    margin: EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(8),
                     child: ListTile(
                       title: Text(
                         "${providerR!.chapterList[index].name}",
-                        style: TextStyle(fontSize: 20, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.black),
                       ),
                       subtitle: Text(
                         "${providerR!.chapterList[index].verse} verse",
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                       leading: Text(
                           "${providerR!.chapterList[index].chapter_number}.",
-                          style: TextStyle(fontSize: 20, color: Colors.black)),
-                      trailing: Icon(
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.black)),
+                      trailing: const Icon(
                         Icons.arrow_forward_ios_outlined,
                         color: Colors.black,
                       ),

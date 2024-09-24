@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bhagvad_geeta_app/screen/verse/model/verse_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 
 import '../../home/provider/home_provider.dart';
@@ -30,7 +31,7 @@ class _VerseScreenState extends State<VerseScreen> {
     providerW = context.watch<HomeProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Verse",
           style: TextStyle(color: Colors.black),
         ),
@@ -41,7 +42,7 @@ class _VerseScreenState extends State<VerseScreen> {
           Container(
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/img.jpg"),
                     opacity: 0.9,
@@ -49,7 +50,7 @@ class _VerseScreenState extends State<VerseScreen> {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
               child: Container(
-                decoration: BoxDecoration(color: Colors.black26),
+                decoration: const BoxDecoration(color: Colors.black26),
               ),
             ),
           ),
@@ -59,17 +60,14 @@ class _VerseScreenState extends State<VerseScreen> {
                 Container(
                   height: 250,
                   width: 300,
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              "${providerR!.chapterList[providerR!.selectedIndex].image}"))),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "${providerR!.chapterList[providerR!.selectedIndex].image}"),
+                    ),
+                  ),
                 ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       image: DecorationImage(
-                //           image: AssetImage("assets/images/img2.png"))),
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
@@ -79,20 +77,20 @@ class _VerseScreenState extends State<VerseScreen> {
                         Image.asset(
                           "assets/images/new.png",
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
                           "${providerR!.chapterList[providerR!.selectedIndex].chapter_number} . ",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "${providerR!.chapterList[providerR!.selectedIndex].name}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Image.asset(
@@ -105,14 +103,15 @@ class _VerseScreenState extends State<VerseScreen> {
                 // Text("Verse Screen"),
                 Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Text(
                     "${providerR!.chapterList[providerR!.selectedIndex].chapter_summary}",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
                 ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: providerW!.filterList.length,
                   itemBuilder: (context, index) {
@@ -120,47 +119,58 @@ class _VerseScreenState extends State<VerseScreen> {
                         ? Container(
                             height: 150,
                             width: MediaQuery.sizeOf(context).width,
-                            // color: Colors.white,
-                            margin: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(5),
+                            margin: const EdgeInsets.all(10),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                color: Colors.white70,
-                                borderRadius: BorderRadius.circular(20)),
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             child: Stack(
                               alignment: Alignment.center,
-                              // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // Text(
-                                //     "${providerR!.filterList[index].chapter_number}"),
                                 Text(
                                   "${providerR!.filterList[index].verse}",
-                                  style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      overflow: TextOverflow.fade,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Align(
-                                    alignment: Alignment(0.9, -0.8),
-                                    child: IconButton(
-                                      icon:
-                                          providerW!.filterList[index].isFav ==
-                                                  false
-                                              ? Icon(Icons.favorite)
-                                              : Icon(
-                                                  Icons.favorite,
-                                                  color: Colors.red,
-                                                ),
-                                      onPressed: () {
-                                        VerseModel vr = providerR!.filterList[index];
-                                        if (vr.isFav!) {
-                                          vr.isFav = false;
-                                        } else {
-                                          vr.isFav = true;
-                                        }
-                                        providerR!.filterList[index] = vr;
-                                        providerR!.verseSave(providerR!.filterList[index].verse!);
-                                      },
-                                    ))
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment(0.9,-0.8),
+                                      child: IconButton(onPressed: () {
+                                        providerW!.flutterTtsspeak();
+                                      }, icon: Icon(Icons.surround_sound)),
+                                    ),
+                                    Align(
+                                      alignment: const Alignment(0.9, -0.8),
+                                      child: IconButton(
+                                        icon: providerW!.filterList[index].isFav ==
+                                                false
+                                            ? const Icon(Icons.favorite)
+                                            : const Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                              ),
+                                        onPressed: () {
+                                          VerseModel vr =
+                                              providerR!.filterList[index];
+                                          if (vr.isFav!) {
+                                            vr.isFav = false;
+                                          } else {
+                                            vr.isFav = true;
+                                          }
+                                          providerR!.filterList[index] = vr;
+                                          providerR!.verseSave(
+                                              providerR!.filterList[index].verse!);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           )
@@ -168,12 +178,13 @@ class _VerseScreenState extends State<VerseScreen> {
                             height: 150,
                             width: MediaQuery.sizeOf(context).width,
                             // color: Colors.white,
-                            margin: EdgeInsets.all(10),
-                            padding: EdgeInsets.all(5),
+                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(5),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                color: Colors.black87,
-                                borderRadius: BorderRadius.circular(20)),
+                              color: Colors.black87,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             child: Stack(
                               alignment: Alignment.center,
                               // mainAxisAlignment: MainAxisAlignment.center,
@@ -182,17 +193,18 @@ class _VerseScreenState extends State<VerseScreen> {
                                 //     "${providerR!.filterList[index].chapter_number}"),
                                 Text(
                                   "${providerR!.filterList[index].verse}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Align(
-                                    alignment: Alignment(0.9, -0.8),
-                                    child: Icon(
-                                      Icons.favorite,
-                                      color: Colors.grey,
-                                    ))
+                                const Align(
+                                  alignment: Alignment(0.9, -0.8),
+                                  child: Icon(
+                                    Icons.favorite,
+                                    color: Colors.grey,
+                                  ),
+                                )
                               ],
                             ),
                           );
