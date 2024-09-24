@@ -12,7 +12,8 @@ class HomeProvider with ChangeNotifier
   int selectedIndex = 0;
   List<VerseModel> allVerseList =[];
   List<VerseModel> filterList = [];
-  String? theme;
+ // bool? theme;
+   String? theme;
   SharedHelper share = SharedHelper();
   int i = 0;
   List<String> verseList = [];
@@ -24,6 +25,7 @@ class HomeProvider with ChangeNotifier
   {
     // JsonHelper helper = JsonHelper();
     chapterList = await JsonHelper.helper.chapterJson();
+    randomVerse();
     notifyListeners();
     print(chapterList);
   }
@@ -37,6 +39,7 @@ class HomeProvider with ChangeNotifier
   void getJson2() async
   {
     allVerseList = await JsonHelper.helper.verseJason();
+    //randomVerse();
     notifyListeners();
   }
 
@@ -55,16 +58,18 @@ class HomeProvider with ChangeNotifier
     notifyListeners();
   }
 
-  void setTheme(String theme)
+  void setTheme(String value)
   {
-    share.setTheme(theme);
+    share.setTheme(value);
     notifyListeners();
+    print(value);
   }
 
   Future<void> getTheme()
   async {
     theme = await share.getTheme();
     notifyListeners();
+    // print(theme);
   }
 
   // void changSwitch(bool check)
@@ -86,6 +91,15 @@ void verseSave(String verse)
   print(verse);
 }
 
+  void verseSave2( )
+  {
+    isLike = !isLike;
+    // verseList.add(verse);
+    // share.setVerse(verseList);
+    notifyListeners();
+    // print(verse);
+  }
+
 void setVerse1()
 {}
 
@@ -97,10 +111,10 @@ void setVerse1()
       //   {
       //     verseList = list as List<String>;
       //   }
-
       if(await share.getVerse() == null)
         {
           verseList = [];
+          print(verseList);
         }
       else
         {

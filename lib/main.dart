@@ -11,6 +11,7 @@ void main() {
           builder: (context, value, child) {
             value.getTheme();
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: ThemeData.light(),
               darkTheme: ThemeData.dark(),
               themeMode:

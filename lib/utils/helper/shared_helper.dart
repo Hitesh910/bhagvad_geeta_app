@@ -6,6 +6,7 @@ class SharedHelper
   async
   {
     SharedPreferences sha = await SharedPreferences.getInstance();
+    //sha.setBool('theme', true);
     sha.setString('theme', mode);
 
   }
@@ -14,8 +15,11 @@ class SharedHelper
   async
   {
     SharedPreferences sha =await SharedPreferences.getInstance();
+   // bool? value = sha.getBool('theme');
     String? theme = sha.getString('theme');
     return theme;
+    // // print(value);
+    // return value;
   }
 
   Future<void> setVerse(List<String> verseList)
@@ -29,6 +33,7 @@ class SharedHelper
   async {
     SharedPreferences sha =await SharedPreferences.getInstance();
     List<String>? verseList =  sha.getStringList('list');
+    print(verseList);
     return verseList;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bhagvad_geeta_app/screen/verse/model/verse_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,8 +30,11 @@ class _VerseScreenState extends State<VerseScreen> {
     providerW = context.watch<HomeProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Verse"),
-        backgroundColor: Colors.orange.shade300,
+        title: Text(
+          "Verse",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.orange.shade400,
       ),
       body: Stack(
         children: [
@@ -39,7 +43,8 @@ class _VerseScreenState extends State<VerseScreen> {
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/img.jpg"),opacity: 0.9,
+                    image: AssetImage("assets/images/img.jpg"),
+                    opacity: 0.9,
                     fit: BoxFit.fill)),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
@@ -131,11 +136,31 @@ class _VerseScreenState extends State<VerseScreen> {
                                   "${providerR!.filterList[index].verse}",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
-                                      fontSize: 18,fontWeight: FontWeight.bold),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                Align(alignment: Alignment(0.9, -0.8),child: IconButton(icon: providerW!.isLike == false  ?Icon(Icons.favorite):Icon(Icons.favorite,color: Colors.red,),onPressed: () {
-                                  providerR!.verseSave(providerR!.filterList[index].verse!);
-                                },))
+                                Align(
+                                    alignment: Alignment(0.9, -0.8),
+                                    child: IconButton(
+                                      icon:
+                                          providerW!.filterList[index].isFav ==
+                                                  false
+                                              ? Icon(Icons.favorite)
+                                              : Icon(
+                                                  Icons.favorite,
+                                                  color: Colors.red,
+                                                ),
+                                      onPressed: () {
+                                        VerseModel vr = providerR!.filterList[index];
+                                        if (vr.isFav!) {
+                                          vr.isFav = false;
+                                        } else {
+                                          vr.isFav = true;
+                                        }
+                                        providerR!.filterList[index] = vr;
+                                        providerR!.verseSave(providerR!.filterList[index].verse!);
+                                      },
+                                    ))
                               ],
                             ),
                           )
@@ -159,9 +184,15 @@ class _VerseScreenState extends State<VerseScreen> {
                                   "${providerR!.filterList[index].verse}",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
-                                      fontSize: 18,fontWeight: FontWeight.w500),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
                                 ),
-                                Align(alignment: Alignment(0.9, -0.8),child: Icon(Icons.favorite,color: Colors.grey,))
+                                Align(
+                                    alignment: Alignment(0.9, -0.8),
+                                    child: Icon(
+                                      Icons.favorite,
+                                      color: Colors.grey,
+                                    ))
                               ],
                             ),
                           );
