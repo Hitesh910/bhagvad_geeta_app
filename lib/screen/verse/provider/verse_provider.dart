@@ -7,11 +7,18 @@ class VerseProvider with ChangeNotifier
 {
   List<VerseModel> allVerseList =[];
   FlutterTts flutterTts = FlutterTts();
+  String lang = "Sanskrit";
   void getJson() async
   {
     allVerseList = await JsonHelper.helper.verseJason();
     notifyListeners();
   }
+
+  // void changeLanguage(String result)
+  // {
+  //   lang = result;
+  //   notifyListeners();
+  // }
 
 }
 

@@ -35,6 +35,34 @@ class _VerseScreenState extends State<VerseScreen> {
           "Verse",
           style: TextStyle(color: Colors.black),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return Column(
+                    children: [
+                      InkWell(
+                        child: Text("Sanskrit"),
+                        onTap: () {
+                          providerW!.changeLanguage("Sanskrit");
+                        },
+                      ),
+                      InkWell(
+                        child: Text("English"),
+                        onTap: () {
+                          providerW!.changeLanguage("English");
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.language),
+          )
+        ],
         backgroundColor: Colors.orange.shade400,
       ),
       body: Stack(
@@ -43,10 +71,11 @@ class _VerseScreenState extends State<VerseScreen> {
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
             decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/img.jpg"),
-                    opacity: 0.9,
-                    fit: BoxFit.fill)),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/img.jpg"),
+                  opacity: 0.9,
+                  fit: BoxFit.fill),
+            ),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
               child: Container(
@@ -129,26 +158,39 @@ class _VerseScreenState extends State<VerseScreen> {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                Text(
-                                  "${providerR!.filterList[index].verse}",
-                                  style: const TextStyle(
-                                      overflow: TextOverflow.fade,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                providerW!.lang == "Sanskrit"
+                                    ? Text(
+                                        "${providerR!.filterList[index].verse}",
+                                        style: const TextStyle(
+                                            overflow: TextOverflow.fade,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : Text(
+                                        "${providerR!.filterList[index].transliteration}",
+                                        style: const TextStyle(
+                                          overflow: TextOverflow.fade,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Align(
-                                      alignment: Alignment(0.9,-0.8),
-                                      child: IconButton(onPressed: () {
-                                        providerW!.flutterTtsspeak();
-                                      }, icon: Icon(Icons.surround_sound)),
+                                      alignment: Alignment(0.9, -0.8),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          providerW!.flutterTtsspeak();
+                                        },
+                                        icon: Icon(Icons.surround_sound),
+                                      ),
                                     ),
                                     Align(
                                       alignment: const Alignment(0.9, -0.8),
                                       child: IconButton(
-                                        icon: providerW!.filterList[index].isFav ==
+                                        icon: providerW!
+                                                    .filterList[index].isFav ==
                                                 false
                                             ? const Icon(Icons.favorite)
                                             : const Icon(
@@ -164,8 +206,8 @@ class _VerseScreenState extends State<VerseScreen> {
                                             vr.isFav = true;
                                           }
                                           providerR!.filterList[index] = vr;
-                                          providerR!.verseSave(
-                                              providerR!.filterList[index].verse!);
+                                          providerR!.verseSave(providerR!
+                                              .filterList[index].verse!);
                                         },
                                       ),
                                     ),
@@ -187,16 +229,14 @@ class _VerseScreenState extends State<VerseScreen> {
                             ),
                             child: Stack(
                               alignment: Alignment.center,
-                              // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // Text(
-                                //     "${providerR!.filterList[index].chapter_number}"),
                                 Text(
                                   "${providerR!.filterList[index].verse}",
                                   style: const TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 const Align(
                                   alignment: Alignment(0.9, -0.8),

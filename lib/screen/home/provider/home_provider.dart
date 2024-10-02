@@ -14,6 +14,7 @@ class HomeProvider with ChangeNotifier {
   List<VerseModel> allVerseList = [];
   List<VerseModel> filterList = [];
   FlutterTts flutterTts = FlutterTts();
+  String lang = "Sanskrit";
 
   // bool? theme;
   String? theme;
@@ -131,7 +132,14 @@ class HomeProvider with ChangeNotifier {
     await flutterTts.isLanguageAvailable("guj-IND");
 
   }
-    // await flutterTts.setLanguage("en-US");
+
+  void changeLanguage(String result)
+  {
+    lang = result;
+    notifyListeners();
+  }
+
+// await flutterTts.setLanguage("en-US");
 
     // await flutterTts.setSpeechRate(1.0);
 
